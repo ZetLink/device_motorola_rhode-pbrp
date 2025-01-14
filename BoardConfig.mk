@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/xiaomi/fog
+DEVICE_PATH := device/motorola/rhode
 
 # PBRP specific build flags
 PB_DISABLE_DEFAULT_DM_VERITY := true
@@ -23,7 +23,7 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a9
 
 # Assertation
-TARGET_OTA_ASSERT_DEVICE := fog,rain,wind
+TARGET_OTA_ASSERT_DEVICE := rhode
 
 # A/B
 ENABLE_VIRTUAL_AB := true
@@ -53,38 +53,27 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 TARGET_SCREEN_DENSITY := 300
 
 # Kernel
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-BOARD_BOOT_HEADER_VERSION := 3
-BOARD_DTB_OFFSET := 0x01f00000
-BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_OFFSET := 0x00008000
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_IMAGE_NAME := Image.gz
-BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_RAMDISK_OFFSET := 0x01000000
-BOARD_TAGS_OFFSET := 0x00000100
+B# Kernel
+BOARD_BOOT_HEADER_VERSION ?= 3
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-
-BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
-BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=4e00000.dwc3
-BOARD_KERNEL_CMDLINE += androidboot.fstab_suffix=default
-BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
-BOARD_KERNEL_CMDLINE += androidboot.memcg=1
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8
-BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x4a90000
-BOARD_KERNEL_CMDLINE += loop.max_part=7
-BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
-BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
-BOARD_KERNEL_CMDLINE += service_locator.enable=1
-BOARD_KERNEL_CMDLINE += swiotlb=2048
-
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_CONFIG := vendor/fog-perf_defconfig
-TARGET_KERNEL_HEADERS := kernel/xiaomi/fog
-TARGET_KERNEL_SOURCE := kernel/xiaomi/fog
-BOARD_RAMDISK_USE_LZ4 := true
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_CMDLINE := \
+    androidboot.console=ttyMSM0 \
+    androidboot.hardware=qcom \
+    androidboot.memcg=1 \
+    console=ttyMSM0,115200n8 \
+    earlycon=msm_geni_serial,0x4a90000 \
+    loop.max_part=7 \
+    lpm_levels.sleep_disabled=1 \
+    msm_rtb.filter=0x237 \
+    service_locator.enable=1 \
+    swiotlb=2048
+BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+TARGET_KERNEL_CONFIG := vendor/bengal-perf_defconfig vendor/debugfs.config vendor/ext_config/moto-bengal.config vendor/ext_config/rhode-default.config
+TARGET_KERNEL_SOURCE := kernel/motorola/sm6225
 
 # Metadata
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
@@ -92,25 +81,18 @@ BOARD_USES_METADATA_PARTITION := true
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
-BOARD_BOOTIMAGE_PARTITION_SIZE := 134217728
+BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 112419745792
+BOARD_USERDATAIMAGE_PARTITION_SIZE ?= 118235312128
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
 
-BOARD_SUPER_PARTITION_SIZE := 9126805504
-BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext odm product vendor
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 9122611200
+BOARD_SUPER_PARTITION_SIZE ?= 7579107328
+BOARD_SUPER_PARTITION_GROUPS := mot_dynamic_partitions
 
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
-BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-
-BOARD_USES_SYSTEM_EXTIMAGE := true
-BOARD_USES_PRODUCTIMAGE := true
 
 BUILD_WITHOUT_VENDOR := true
 
@@ -146,7 +128,7 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_DEFAULT_BRIGHTNESS := 1200
+TW_DEFAULT_BRIGHTNESS := 1800
 TW_Y_OFFSET := 91
 TW_H_OFFSET := -91
 TWRP_INCLUDE_LOGCAT := true
@@ -155,25 +137,6 @@ TARGET_USES_MKE2FS := true
 TW_NO_SCREEN_BLANK := true
 TW_EXCLUDE_APEX := true
 TW_NO_FLASH_CURRENT_TWRP := true
-
-#Properties
-TW_OVERRIDE_SYSTEM_PROPS := \
-    "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
-
-
-# Vibrator
-TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-
-RECOVERY_BINARY_SOURCE_FILES += \
-    $(TARGET_OUT_VENDOR_EXECUTABLES)/hw/vendor.qti.hardware.vibrator.service
-
-RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so \
-    $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/vendor.qti.hardware.vibrator.impl.so \
-    $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libqtivibratoreffect.so
 
 ENABLE_VIRTUAL_AB := true
 

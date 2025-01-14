@@ -1,6 +1,11 @@
 <!--
     Input:
+        manifest_level_5.xml
+        manifest_common.xml
+        keymaster_41.xml
         manifest.xml
+        manifest.xml
+        manifest_IMoto_Fingerprint.xml
 -->
 <manifest version="2.0" type="device" target-level="5">
     <hal format="hidl">
@@ -22,6 +27,16 @@
             <instance>default</instance>
         </interface>
         <fqname>@6.0::IEffectsFactory/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.biometrics.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>2.1</version>
+        <interface>
+            <name>IBiometricsFingerprint</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@2.1::IBiometricsFingerprint/default</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.bluetooth</name>
@@ -54,12 +69,6 @@
         <fqname>@2.4::ICameraProvider/legacy/0</fqname>
     </hal>
     <hal format="hidl">
-        <name>android.hardware.drm</name>
-        <transport>hwbinder</transport>
-        <fqname>@1.3::ICryptoFactory/wfdhdcp</fqname>
-        <fqname>@1.3::IDrmFactory/wfdhdcp</fqname>
-    </hal>
-    <hal format="hidl">
         <name>android.hardware.gatekeeper</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -72,12 +81,7 @@
     <hal format="hidl">
         <name>android.hardware.keymaster</name>
         <transport>hwbinder</transport>
-        <version>4.0</version>
-        <interface>
-            <name>IKeymasterDevice</name>
-            <instance>default</instance>
-        </interface>
-        <fqname>@4.0::IKeymasterDevice/default</fqname>
+        <fqname>@4.1::IKeymasterDevice/default</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.media.omx</name>
@@ -105,18 +109,14 @@
         <fqname>@1.0::IMemtrack/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>android.hardware.neuralnetworks</name>
+        <name>android.hardware.nfc</name>
         <transport>hwbinder</transport>
         <version>1.2</version>
         <interface>
-            <name>IDevice</name>
-            <instance>qti-default</instance>
-            <instance>qti-dsp</instance>
-            <instance>qti-gpu</instance>
+            <name>INfc</name>
+            <instance>default</instance>
         </interface>
-        <fqname>@1.2::IDevice/qti-default</fqname>
-        <fqname>@1.2::IDevice/qti-dsp</fqname>
-        <fqname>@1.2::IDevice/qti-gpu</fqname>
+        <fqname>@1.2::INfc/default</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.radio</name>
@@ -145,6 +145,18 @@
             <instance>default</instance>
         </interface>
         <fqname>@1.0::IDevice/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.secure_element</name>
+        <transport>hwbinder</transport>
+        <version>1.2</version>
+        <interface>
+            <name>ISecureElement</name>
+            <instance>SIM1</instance>
+            <instance>SIM2</instance>
+        </interface>
+        <fqname>@1.2::ISecureElement/SIM1</fqname>
+        <fqname>@1.2::ISecureElement/SIM2</fqname>
     </hal>
     <hal format="hidl">
         <name>android.hardware.soundtrigger</name>
@@ -177,24 +189,33 @@
         <fqname>@1.0::IOffloadControl/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>com.fingerprints.extension</name>
+        <name>com.motorola.hardware.biometric.fingerprint</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <name>IFingerprintEngineering</name>
+            <name>IMotoFingerPrint</name>
             <instance>default</instance>
         </interface>
         <interface>
-            <name>IFingerprintNavigation</name>
+            <name>IMotoFingerPrintSensorTest</name>
             <instance>default</instance>
         </interface>
+        <fqname>@1.0::IMotoFingerPrint/default</fqname>
+        <fqname>@1.0::IMotoFingerPrintSensorTest/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>com.motorola.hardware.display.panel</name>
+        <transport>hwbinder</transport>
+        <version>1.1</version>
         <interface>
-            <name>IFingerprintSensorTest</name>
+            <name>IDisplayPanel</name>
             <instance>default</instance>
         </interface>
-        <fqname>@1.0::IFingerprintEngineering/default</fqname>
-        <fqname>@1.0::IFingerprintNavigation/default</fqname>
-        <fqname>@1.0::IFingerprintSensorTest/default</fqname>
+        <fqname>@1.1::IDisplayPanel/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>com.motorola.hardware.display.touch</name>
+        <transport>hwbinder</transport>
     </hal>
     <hal format="hidl">
         <name>com.qualcomm.qti.dpm.api</name>
@@ -225,6 +246,60 @@
             <instance>com.qualcomm.qti.uceservice</instance>
         </interface>
         <fqname>@2.3::IUceService/com.qualcomm.qti.uceservice</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.camera.imgtuner</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IImageTuning</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.0::IImageTuning/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.fdrcontrol</name>
+        <transport>hwbinder</transport>
+        <version>1.2</version>
+        <interface>
+            <name>IFdrControl</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.2::IFdrControl/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.health</name>
+        <transport>hwbinder</transport>
+        <version>2.0</version>
+        <interface>
+            <name>IMotHealth</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@2.0::IMotHealth/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.vibrator</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IMotVibrator</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.0::IMotVibrator/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>motorola.hardware.wifi.supplicant</name>
+        <transport>hwbinder</transport>
+        <version>1.1</version>
+        <interface>
+            <name>ISupplicantMot</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.1::ISupplicantMot/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>motorola.hardware.wireless.powershare</name>
+        <transport>hwbinder</transport>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.data.factory</name>
@@ -349,16 +424,6 @@
         <fqname>@1.1::IEmbms/embmsslServer0</fqname>
     </hal>
     <hal format="hidl">
-        <name>vendor.qti.hardware.factory</name>
-        <transport>hwbinder</transport>
-        <version>1.1</version>
-        <interface>
-            <name>IFactory</name>
-            <instance>default</instance>
-        </interface>
-        <fqname>@1.1::IFactory/default</fqname>
-    </hal>
-    <hal format="hidl">
         <name>vendor.qti.hardware.fm</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -367,16 +432,6 @@
             <instance>default</instance>
         </interface>
         <fqname>@1.0::IFmHci/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.fstman</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IFstManager</name>
-            <instance>default</instance>
-        </interface>
-        <fqname>@1.0::IFstManager/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.iop</name>
@@ -397,16 +452,6 @@
             <instance>default</instance>
         </interface>
         <fqname>@2.2::IPerf/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.qccvndhal</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IQccvndhal</name>
-            <instance>qccvndhal</instance>
-        </interface>
-        <fqname>@1.0::IQccvndhal/qccvndhal</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.qseecom</name>
@@ -496,14 +541,14 @@
     <hal format="hidl">
         <name>vendor.qti.hardware.radio.qtiradio</name>
         <transport>hwbinder</transport>
-        <version>2.4</version>
+        <version>2.7</version>
         <interface>
             <name>IQtiRadio</name>
             <instance>slot1</instance>
             <instance>slot2</instance>
         </interface>
-        <fqname>@2.4::IQtiRadio/slot1</fqname>
-        <fqname>@2.4::IQtiRadio/slot2</fqname>
+        <fqname>@2.7::IQtiRadio/slot1</fqname>
+        <fqname>@2.7::IQtiRadio/slot2</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.radio.uim</name>
@@ -582,31 +627,6 @@
         <fqname>@1.0::IWifiStats/wifiStats</fqname>
     </hal>
     <hal format="hidl">
-        <name>vendor.qti.hardware.wifidisplaysession</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IWifiDisplaySession</name>
-            <instance>wifidisplaysession</instance>
-        </interface>
-        <interface>
-            <name>IWifiDisplaySessionAudioTrack</name>
-            <instance>wifidisplaysessionaudiotrack</instance>
-        </interface>
-        <interface>
-            <name>IWifiDisplaySessionImageTrack</name>
-            <instance>wifidisplaysessionimagetrack</instance>
-        </interface>
-        <interface>
-            <name>IWifiDisplaySessionVideoTrack</name>
-            <instance>wifidisplaysessionvideotrack</instance>
-        </interface>
-        <fqname>@1.0::IWifiDisplaySession/wifidisplaysession</fqname>
-        <fqname>@1.0::IWifiDisplaySessionAudioTrack/wifidisplaysessionaudiotrack</fqname>
-        <fqname>@1.0::IWifiDisplaySessionImageTrack/wifidisplaysessionimagetrack</fqname>
-        <fqname>@1.0::IWifiDisplaySessionVideoTrack/wifidisplaysessionvideotrack</fqname>
-    </hal>
-    <hal format="hidl">
         <name>vendor.qti.ims.callinfo</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
@@ -620,11 +640,13 @@
         <name>vendor.qti.ims.factory</name>
         <transport>hwbinder</transport>
         <version>1.1</version>
+        <version>2.2</version>
         <interface>
             <name>IImsFactory</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.1::IImsFactory/default</fqname>
+        <fqname>@2.2::IImsFactory/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.imsrtpservice</name>
@@ -636,6 +658,10 @@
         </interface>
         <fqname>@3.0::IRTPService/imsrtpservice</fqname>
     </hal>
+    <hal format="hidl" override="true">
+        <name>vendor.qti.power.pasrmanager</name>
+        <transport>hwbinder</transport>
+    </hal>
     <hal format="hidl">
         <name>vendor.qti.qspmhal</name>
         <transport>hwbinder</transport>
@@ -645,26 +671,6 @@
             <instance>default</instance>
         </interface>
         <fqname>@1.0::IQspmhal/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.silead.hardware.fingerprintext</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>ISileadFingerprint</name>
-            <instance>default</instance>
-        </interface>
-        <fqname>@1.0::ISileadFingerprint/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.xiaomi.hardware.displayfeature</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IDisplayFeature</name>
-            <instance>default</instance>
-        </interface>
-        <fqname>@1.0::IDisplayFeature/default</fqname>
     </hal>
     <sepolicy>
         <version>30.0</version>

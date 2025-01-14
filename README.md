@@ -1,1 +1,1 @@
-## Device config for PBRP Redmi 10C ( fog, rain, wind )
+## Device config for PBRP Moto G52 ( rhode )

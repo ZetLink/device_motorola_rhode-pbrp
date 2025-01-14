@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/pb_fog.mk
+    $(LOCAL_DIR)/pb_rhode.mk
 
 COMMON_LUNCH_CHOICES := \
-    pb_fog-user \
-    pb_fog-userdebug \
-    pb_fog-eng
+    pb_rhode-user \
+    pb_rhode-userdebug \
+    pb_rhode-eng

@@ -1,2 +1,2 @@
 # Clone kernel tree
-git clone --depth=1 -b fog-r-oss-staging https://github.com/alternoegraha/fog_kernel_xiaomi_sm6225 kernel/xiaomi/fog
+git clone --depth=1 -b lineage-21 https://github.com/LineageOS/android_kernel_motorola_sm6225.git kernel/motorola/rhode
